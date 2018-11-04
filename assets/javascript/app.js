@@ -66,7 +66,7 @@ var questions = [
 
 var currentQuestion = 0;
 var correctCount = 0;
-var time = 10;
+var time = 25;
 var intervalId;
 var questionC;
 var correctA;
@@ -83,9 +83,10 @@ var correctImage;
 
 
 $("#startButton").on("click", function() {
+    run();
     $("#question").show();
     $("#choices").show();
-    run();
+
     $("#startButton").hide();
     $("#time-left").show();
 }); 
@@ -98,7 +99,7 @@ $(document).on("click", "input[type='radio']", function() {
     userAnswer = $(this).val();
     run();
     getUserInput();
-    setTimeout(tenSeconds, 1000 * 3);
+    setTimeout(tenSeconds, 1000 * 7);
 
     if (currentQuestion === 9) {
         stop();
@@ -113,18 +114,19 @@ $(document).on("click", "input[type='radio']", function() {
         $("#results").html("Correct: " + correctCount);
         $("#results").append("<p>" + "Incorrect: " + (10 - correctCount) + "</p>");
         $("#restartButton").show();
+        $("#time-left").hide();
     }
     
 });
 
 $("#restartButton").on("click", function() {
     currentQuestion = 0;
-    $("#question").show();
-    $("#choices").show();
+    displayQuestion();
+    showSlides();
     run();
     $("#restartButton").hide();
     $("#results").hide();
-    $("#time-left").hide();
+
     correctCount = 0;
 
 
@@ -165,7 +167,6 @@ function getUserInput() {
     if ((time > 0) && (userAnswer == correctA)) {
 
         $("#answerPage").html("That's Correct!!")
-        // $("#answerImage").text(correctImage);
         correctCount = correctCount + 1;
         $("#answerPage").append("<p>" + correctImage + "</p>");
 
@@ -175,15 +176,13 @@ function getUserInput() {
 
     else if ((time > 0) && (userAnswer >= 0)) {
         $("#answerPage").html("Nope!!!");
-        $("#answerPage").append("The Correct Answer was: " + questions[currentQuestion].options[correctA]);
+        $("#answerPage").append("<p>" + "The Correct Answer was: " + questions[currentQuestion].options[correctA] + "</p>");
         $("#answerPage").append("<p>" + correctImage + "</p>");
 
     }
 
     stop();
-    $("#answerPage").show();
-    $("#question").hide();
-    $("#choices").hide();
+    showAnswerPage();
     $("answerPage").append("<img src='https://imgc.allpostersimages.com/img/print/posters/toy-story-3-cast_a-G-7565576-0.jpg?w=947&h=634'>");
 
 
@@ -193,11 +192,9 @@ function getUserInput() {
 
     
 function timesUp() {
-    $("#question").hide();
-    $("#choices").hide();
-    $("#answerPage").show();
+    showAnswerPage();
     $("#answerPage").html("Time's Up!!!")
-    $("#answerPage").append("The Correct Answer was: " + questions[currentQuestion].options[correctA]);
+    $("#answerPage").append("<p>" + "The Correct Answer was: " + questions[currentQuestion].options[correctA] + "</p>");
     $("#answerPage").append("<p>" + correctImage + "</p>");
 
 
@@ -212,12 +209,12 @@ function run() {
 
 function decrement() {
     time--;
-    $("#time-left").html(time);
+    $("#time-left").html("<p>" + "Time Left: " + time + "</p>");
     
     if (time === 0) {
         stop();
         timesUp();
-        setTimeout(tenSeconds, 1000 * 3);
+        setTimeout(tenSeconds, 1000 * 7);
         
     }
 }
@@ -241,20 +238,24 @@ function reset() {
     $("input[name='choiceList']:checked").empty();
     currentQuestion = currentQuestion + 1;
     displayQuestion()
-    $("#question").show();
-    $("#choices").show();
-    $("#answerPage").hide();
+    showSlides();
     $("#answerPage").empty();
-
-
-    time = 10;
-
-
+    time = 25;
 }
 
+function showSlides() {
+    $("#question").show();
+    $("#choices").show();
+    $("#time-left").show();
+    $("#answerPage").hide();
+}
 
-
-
+function showAnswerPage() {
+    $("#answerPage").show();
+    $("#question").hide();
+    $("#choices").hide();
+    $("#time-left").hide();
+}
 
 
 

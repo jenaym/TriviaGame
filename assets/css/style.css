@@ -1,4 +1,34 @@
 img {
     width: 400px;
+    max-width: 100%;
     height: 300px;
+}
+
+body {
+    background: url(https://ih0.redbubble.net/image.488884129.3683/flat,550x550,075,f.u1.jpg);
+}
+
+.card-title {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 60px;
+}
+.card {
+    margin-top: 30px;
+}
+
+.card-body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: lightpink;
+    font-size: 20px;
+    line-height: 35px;
+}
+
+#question {
+    font-weight: bold;
+    font-size: 26px;
+}
+
+
+#answerPage {
+    font-weight: bold;
 }
